@@ -1,29 +1,22 @@
-FROM ubuntu
+FROM mathom/ubuntu-jdk7
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-RUN apt-get update
+RUN apt-get install -y unzip wget rsync
 
-# Fake a fuse install
-RUN apt-get install libfuse2
-RUN cd /tmp ; apt-get download fuse
-RUN cd /tmp ; dpkg-deb -x fuse_* .
-RUN cd /tmp ; dpkg-deb -e fuse_*
-RUN cd /tmp ; rm fuse_*.deb
-RUN cd /tmp ; echo -en '#!/bin/bash\nexit 0\n' > DEBIAN/postinst
-RUN cd /tmp ; dpkg-deb -b . /fuse.deb
-RUN cd /tmp ; dpkg -i /fuse.deb
-
-RUN apt-get install -y openjdk-7-jre unzip wget
 RUN mkdir /minecraft
+RUN mkdir /minecraft-source
 
-VOLUME /minecraft
-WORKDIR /minecraft
+WORKDIR /minecraft-source
 
-RUN echo workdir is $PWD
 RUN wget -O /tmp/tekkit.zip http://mirror.technicpack.net/Technic/servers/tekkitmain/Tekkit_Server_v1.1.10.zip
+#ADD Tekkit_Server_v1.1.10.zip /tmp/tekkit.zip
 RUN unzip /tmp/tekkit.zip
 
-ADD server.properties /minecraft/server.properties
+ADD server.properties /minecraft-source/server.properties
+ADD launch-minecraft.sh /minecraft-source/launch-minecraft.sh
+
+WORKDIR /minecraft
+
+ENTRYPOINT ["/bin/bash", "-x", "/minecraft-source/launch-minecraft.sh"]
 
 EXPOSE 25565
-CMD java -Xmx3G -Xms2G -jar Tekkit.jar nogui
+VOLUME ["/minecraft"]
