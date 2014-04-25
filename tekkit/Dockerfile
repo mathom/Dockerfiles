@@ -8,21 +8,21 @@ RUN mkdir /minecraft-source
 WORKDIR /minecraft-source
 
 # set up source directory for server files
-RUN wget -O /tmp/tekkit.zip http://mirror.technicpack.net/Technic/servers/tekkitmain/Tekkit_Server_v1.1.10.zip
-RUN wget -O /minecraft-source/MCPC.jar http://ci.md-5.net/job/MCPC-Plus-Legacy/646/artifact/target/mcpc-plus-1.5.2-R1.1-forge738-B646.jar
+RUN wget -O /tmp/tekkit.zip http://mirror.technicpack.net/Technic/servers/tekkitmain/Tekkit_Server_v1.2.8e.zip
+RUN wget -O /minecraft-source/MCPC.jar http://ci.md-5.net/job/MCPC-Plus/lastStableBuild/artifact/build/distributions/mcpc-plus-1.7.2-R0.4-forge1033-B51.jar
 RUN unzip /tmp/tekkit.zip
 
 RUN mkdir -p /minecraft-source/plugins
 
 # set up worldguard
 RUN mkdir -p /minecraft-source/plugins/WorldGuard
-RUN wget -O /tmp/worldguard.zip http://dev.bukkit.org/media/files/706/562/worldguard-5.7.5.zip
+RUN wget -O /tmp/worldguard.zip http://dev.bukkit.org/media/files/776/556/worldguard-5.9.zip
 RUN cd /minecraft-source/plugins ; unzip /tmp/worldguard.zip WorldGuard.jar
 ADD WorldGuard/config.yml /minecraft-source/plugins/WorldGuard/config.yml
 
 # set up worldedit
 RUN mkdir -p /minecraft-source/plugins/WorldEdit
-RUN wget -O /tmp/worldedit.zip http://dev.bukkit.org/media/files/715/448/worldedit-5.5.7.zip
+RUN wget -O /tmp/worldedit.zip http://dev.bukkit.org/media/files/786/104/worldedit-5.6.2.zip
 RUN cd /minecraft-source/plugins ; unzip /tmp/worldedit.zip WorldEdit.jar
 ADD WorldEdit/config.yml /minecraft-source/plugins/WorldEdit/config.yml
 
