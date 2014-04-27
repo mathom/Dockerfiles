@@ -1,0 +1,14 @@
+groups:
+  default:
+    default: true
+    permissions:
+    - -*
+  players:
+    permissions:
+    - modifyworld.*
+    - permissions.manage.reload
+    - permissions.manage.users
+    - permissions.manage.membership.players
+  admins:
+    permissions:
+    - permissions.*
