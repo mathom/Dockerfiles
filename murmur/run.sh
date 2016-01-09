@@ -8,7 +8,7 @@ if [ ! -f /data/superuser_password.txt ]
 then
     SUPERUSER_PASSWORD=`pwgen -cns -1 32 1`
     echo $SUPERUSER_PASSWORD > /data/superuser_password.txt
-    /usr/sbin/murmurd -ini /etc/mumble-server.ini -supw $SUPERUSER_PASSWORD
+    exec /sbin/setuser mumble-server /usr/sbin/murmurd -ini /data/murmur.ini -supw $SUPERUSER_PASSWORD
     sleep 3
     echo
     echo "# ------------------------------------------------------------------------------"
@@ -21,4 +21,4 @@ then
     echo
 fi
 
-exec /sbin/setuser mumble-server /usr/sbin/murmurd -fg -ini /data/mumble-server.ini -v
+exec /sbin/setuser mumble-server /usr/sbin/murmurd -fg -ini /data/murmur.ini -v
